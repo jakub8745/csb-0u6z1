@@ -2,18 +2,20 @@ html,
 body {
   margin: 0;
   padding: 0;
-
   height: 100vh;
   width: auto;
-
   overflow: hidden;
-  font-family: "Courier Prime", monospace;
+  font-family: "Trebuchet", "Trebuchet MS", Helvetica, Arial, Lucida, sans-serif;
+  color: #333;
+  word-wrap: break-word;
 }
 
 #counterDown {
-  text-align: left;
-  font-size: 1.2em;
-  left: -0.5em;
+  text-align: center;
+  font-size: 1.3em;
+  color: whitesmoke;
+  top: 0.1em;
+  position: relative;
 }
 
 @keyframes example {
@@ -35,14 +37,6 @@ body {
     top: 0px;
   }
 }
-.gallery-name {
-  position: fixed;
-  top: 55%;
-  left: 50%;
-  /* bring your own prefixes */
-  transform: translate(-50%, -50%);
-  font-size: 150%;
-}
 
 #loading-screen {
   position: absolute;
@@ -62,7 +56,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgb(7, 19, 34);
+
   --ggs: 9;
 }
 
@@ -76,43 +70,6 @@ body {
   display: block;
 }
 
-.infoDOM {
-  position: absolute;
-  overflow-y: auto;
-  overflow-x: hidden;
-  align-items: center;
-  flex-direction: column;
-  display: none;
-
-  -webkit-overflow-scrolling: touch;
-
-  opacity: 0;
-  animation: mymove 0.5s;
-  animation-delay: 0s;
-  animation-fill-mode: forwards;
-
-  background-color: rgb(255, 255, 255);
-  background-size: cover;
-
-  /*border: solid 1px rgb(5, 5, 5);*/
-  border-radius: 7px;
-  top: 2em;
-  right: 0.5em;
-  padding: 0.4em;
-
-  width: auto; /*ZMIENIONE NA AUTO*/
-  max-width: 14em;
-  max-height: 80vh;
-  /* justify-content: center;
-  /*text-align: justify;
-  /*text-justify: inter-character;*/
-}
-
-.gesty {
-  opacity: initial;
-  width: auto;
-  height: inherit;
-}
 .move {
   top: 0.5em;
   width: auto;
@@ -153,76 +110,30 @@ section {
   position: relative;
   font-weight: 400;
   top: 0em;
-  color: black;
+
   padding: 0px;
 }
-/*zmaieni¬em .infoIFRAME na nameOnBar*/
-#nameOnBar {
-  /*overflow: auto;
-  border: 0;
-  height: auto;
-  max-height: 60vh;
-  
-  position: relative;
-  
-  width: auto;*/
-  text-align: left;
-  left: 0;
-  top: 0;
-}
-p {
-  /*position: relative;
-  overflow: auto;*/
-  margin-top: -0.2em;
-  margin-left: 0.4em;
-  max-inline-size: 100%;
-  font-family: "Courier Prime", monospace;
-  font-weight: 300;
-  font-size: 120%;
-  color: black;
-}
 
-b {
-  font-family: "Courier Prime", monospace;
-  font-weight: 700;
-  top: 30em;
-  left: 2em;
-  color: black;
-}
-.nameOnBarGesty {
-  height: auto;
-  max-height: 60vh;
-}
-
-.infoFRAME {
-  overflow: auto;
-  position: relative;
-  border: 0;
-  height: auto;
-  max-height: 10vh;
-  left: 0;
-
-  top: 0;
-  width: auto;
-}
 .open-info-button {
   font-family: "Courier Prime", monospace;
-  /* font-weight: regular;*/
-  color: black;
   background: none;
-
   padding: 0em;
-
-  position: absolute;
-  padding-top: 0.2em;
-  bottom: 0.4em; /* 0.4em*/
-  right: 0.5em;
-  /*transform: rotate(90deg);*/
+  position: relative;
+  margin-left: 38px;
+  bottom: 2em;
 }
 #info-icon {
   height: 2em;
 }
 
+.reload-button {
+  margin-bottom: -2px;
+  position: relative;
+  font-size: 1.5em;
+  border: solid 2px rgb(0, 0, 0);
+  border-radius: 2em;
+  background-color: rgb(255, 255, 255);
+}
 .exhibition-name {
   position: absolute;
   bottom: 8em;
@@ -238,31 +149,16 @@ b {
 .exhibition-name section {
   font-size: 0.95em;
   position: absolute;
-  font-family: "Courier Prime", monospace;
+
   font-weight: 500;
-  color: rgb(0, 0, 0);
+
   top: -0.5em;
   left: 3em;
   width: 40em;
   height: auto;
-  /*text-shadow: -1px 1px 0 rgb(255, 255, 255), 1px 1px 0 rgb(255, 255, 255),
-    1px -1px 0 rgb(255, 255, 255);
-  /*-1px -1px 0 #000;*/
 }
 
-.info {
-  height: 2em;
-  width: 2em;
-  background-color: rgb(216, 28, 28);
-  border-radius: 50%;
-
-  display: block;
-  position: absolute;
-  right: 1vw;
-  bottom: 0.6em;
-}
-.info h1 {
-  color: rgb(0, 0, 0);
+h1 {
   font-family: inherit;
   font-size: 2em;
   font-weight: bold;
@@ -272,15 +168,6 @@ b {
   position: relative;
   top: -0.8em;
   right: -0.35em;
-}
-
-#gest1 {
-  animation-name: do-gest;
-  animation-duration: 20s;
-  display: none;
-  position: absolute;
-  bottom: 0.5em;
-  left: 2em;
 }
 
 @keyframes do-gest {
@@ -294,45 +181,8 @@ b {
   }
 }
 
-.close-button {
-  height: 1.1em;
-  width: 1.5em;
-  position: absolute;
-
-  right: -0.1em;
-  top: 0.7em;
-  box-sizing: border-box;
-  line-height: 2em;
-  display: inline-block;
-}
-
-.close-button:before,
-.close-button:after {
-  transform: rotate(-45deg);
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -5px;
-  margin-left: -15px;
-  display: block;
-  height: 3px;
-  width: 1em;
-  background-color: #7a7a7a;
-  transition: all 0.1s ease-out;
-}
-
-.close-button:after {
-  transform: rotate(45deg);
-}
-
-.close-button:hover:before,
-.close-button:hover:after {
-  transform: rotate(0deg);
-}
-
 a {
-  color: #ff0;
+  color: #333;
   text-decoration: none;
 }
 
@@ -345,21 +195,6 @@ button {
   text-transform: uppercase;
 }
 
-#info {
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  text-align: center;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  pointer-events: none;
-  z-index: 1; /* TODO Solve this in HTML */
-}
-
 a,
 button,
 input,
@@ -367,44 +202,158 @@ select {
   pointer-events: auto;
 }
 
-.dg.ac {
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  z-index: 2 !important; /* TODO Solve this in HTML */
+p {
+  padding-bottom: 42px;
+  margin-bottom: -38.8px;
+  margin-top: 1px;
+  margin-left: 0px;
+  margin-right: 0px;
+  max-inline-size: 100%;
+  width: 80%;
+  font-weight: 300;
+  color: #333;
+  background-color: none;
 }
 
-#overlay {
+.close-button {
+  height: 1.3em;
+  width: 1.3em;
+  background-color: none;
+  border: solid 2px #949494;
+  border-radius: 1px;
+  position: relative;
+  transform: translate(41vw, 2em);
+  box-sizing: border-box;
+  line-height: 2em;
+  display: inline-block;
+  z-index: 123;
+}
+
+.close-button:before,
+.close-button:after {
+  transform: rotate(-45deg);
+  content: "";
   position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 45%;
+  left: 3%;
+
+  display: block;
+  height: 3px;
+  width: 1em;
+  background-color: #910404;
+  transition: all 0.1s ease-out;
+}
+
+.close-button:after {
+  transform: rotate(45deg);
+}
+
+.close-button:hover:before,
+.close-button:hover:after {
+  transform: rotate(0deg);
+}
+
+.flex-container {
+  right: 5vw !important;
+  position: absolute;
+  z-index: 1000;
+  top: 1vh;
+  align-self: center;
+  left: 5vw;
+  font-family: "Trebuchet", "Trebuchet MS", Helvetica, Arial, Lucida, sans-serif;
+  font-size: 1.2em;
   display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
   align-items: center;
-  justify-content: center;
-  background-color: rgb(243, 243, 243);
+  align-content: normal;
+  overflow: auto;
 }
 
-#overlay button {
-  background: #ffffff;
-  border: 0;
-  color: #000000;
-  padding: 16px 20px;
-  text-transform: uppercase;
-  text-align: left;
+.flex-items {
+  width: 86vw;
+  opacity: 0.9;
+  background-color: rgba(255, 235, 205, 0.849);
+}
+
+.flex-items:nth-child(1) {
+  background: rgba(153, 0, 61, 0.952);
+  padding: 8px;
+  position: relative;
   cursor: pointer;
+  transition: flex-grow, flex-shrink 0.5s ease;
+  text-align: left;
+  color: white;
+  border-color: #779d3f;
+  border-left-width: 1em;
+  border-left-style: solid;
+  height: 2em;
+  flex-grow: 1;
+
+  overflow: auto;
+
+  /* for Firefox */
+  min-height: 0;
+}
+.flex-items:nth-child(2) {
+  text-align: left;
+  padding-left: 0;
+  border: 18px solid white;
+  position: relative;
+  cursor: pointer;
+  transition: flex-grow, flex-shrink 0.5s ease;
+  background-color: #973346;
+
+  right: 1.1vw !important;
+  left: 0vw !important;
+}
+.flex-items:nth-child(2) {
+  padding: 0;
+  position: relative;
+  cursor: pointer;
+  transition: flex-grow, flex-shrink 0.5s ease;
+  background-color: #973346;
+
+  text-align: left;
+  padding-left: 0;
+}
+.flex-items:nth-child(2) p {
+  color: rgb(255, 255, 255);
+}
+.flex-items:nth-child(3) {
+  flex-grow: 6;
+  padding: 8px;
+  position: relative;
+  cursor: pointer;
+  transition: flex-grow, flex-shrink 0.5s ease;
+  text-align: center;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  height: 80vh;
+  border: white;
+  border-left-width: 1em;
+  border-left-style: solid;
+}
+.flex-items:nth-child(4) {
+  transform: translate(0, 0);
 }
 
-#overlay button section {
-  font-size: 2em;
+iframe {
+  width: 100%;
+  opacity: 0.85;
 }
-#notSupported {
-  width: 50%;
-  margin: auto;
-  background-color: #f00;
-  margin-top: 20px;
-  padding: 10px;
+.sections {
+  margin: 10px;
+
+  flex-grow: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  /* for Firefox */
+  min-height: 0;
+}
+.info_opis {
+  height: 3.5em;
 }
