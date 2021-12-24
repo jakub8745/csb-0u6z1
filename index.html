@@ -8,7 +8,6 @@
 
 -->
 
-
 <!--Upgaded to THREEJS r134, OrbitControls 09/2021, and huge changes in code for better responsing to change of windows size-->
 <!--I got rid with IFRAME and back to DIV. I used stopImeditePropagation() and others quite randomly ;) the clue is probably in abolute relative, I haven't got enought time for disent reaserch-->
 <!---->
@@ -29,32 +28,83 @@ Upgrade:
         - use  of {user data} in model, get rid of array, to scene.json model distanceToArtObject was added.
         - properties of x, z was abonded. I use getWordDirection() of artObject to set tween (camera, target)
 -2021/12/09 finaly OrbitControls has been changed left button: rotate and pan forward/backward, right b: pan, scroll: dolly in/out !!!!!
+-2021/12/10 first attempt to decentralize hosting
+-202112/17  I use IFRAME because Orbit blocks touch events on mobiles. Use of iframe solved problem. 
+            TEXT in info iframe can be taken fron userData of artObject
 
+            20211224 - iframe "info widget " with html and counter down
 
 coming next:
+  
  - problem of double touch when moving on mobiles
-       
+
         
 -->
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <title>Blue Point Art Gallery</title>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <meta content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" name="viewport" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet" />
-
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap" rel="stylesheet">
   <link type="text/css" rel="stylesheet" href="styles/main.css" />
+
 </head>
+
+<body>
+  <section id="loading-screen">
+    <img src="/textures/BluePointGallery.gif" alt="LogoBluePointArtGallery" width="10%" />
+    Stanisław Vincenz<br /><i><b>... Dialogi Vincenza — spojrzenia</b></i></section>
+
+  <canvas id="c"></canvas>
+  <div class="exhibition-name">
+    <section>
+      <b>Stanisław Vincenz<i> Dialogi Vincenza — spojrzenia</i><b /><br /><a href="https://bluepointart.uk/">
+        BLUE POINT ART GALLERY</a><br />Londyn 2021<br />
+
+
+        <input class="reload-button" type="button" value="&#8635" onClick="window.location.reload(false)"
+          ontouchstart="window.location.reload()" /><br />
+
+          <div id="infoButton" class="open-info-button" display="block">
+              <a href="#"><img id="info-icon" src="/textures/icons/info.png" /></a>
+            </div>
+          
+    </section>
+  </div>
+  
+<div id="widget" class="flex-container" style="display: none">
+    
+        <a href="#" class="close-button" ontouchstart="closeButton()" onclick="closeButton()"></a>
+        <script>
+          const closeButton = () => {
+            document.getElementById('widget').style.display = 'none';
+          };
+        </script>
+      
+  <div class="sections">
+     
+    <iframe class="info_opis" src="iframe.html" frameborder="0" allowtransparency="true"
+    title="info_opis"></iframe>
+    <div class="flex-items"><div id="nowyCounterDown"></div>
+      
+    </div>
+    <div class="flex-items">
+      <iframe src="https://stanislaw-vincenz.puno.ac.uk/o-projekcie-2/?lang=pl" frameborder="0" allowtransparency="true"
+        title="info"></iframe>
+    </div>
+   
+  </div>
+</div>
+
+
+ 
 <script type="text/javascript" src="/build/tween.js"></script>
 
 <script type="module">
-  //import * as THREE from "/build/three.module.js";
   import * as THREE from "/build/three.module.js";
-  //https://github.com/jakub8745/csb-0u6z1/blob/gh-pages/build/three.module.js
   //import * as THREE from "https://link.eu1.storjshare.io/s/jullkb2wse7gzkwi2thwqxb6r6ra/rektorzy/build/three.min.js?download";
   import { OrbitControls } from "/build/OrbitControls.js"; //////////////////////
   import { obrazyArray } from "/js/arrays.js";
@@ -94,44 +144,40 @@ coming next:
     }
     return "desktop";
   };
-  /////////////////////////////
-  //alert(getDeviceType());
-  //console.log(navigator.userAgent);
-  //console.log(getDeviceType());
 
   const deviceType = getDeviceType();
 
   const counterDownTimer = () => {
-      // Set the date we're counting down to
-      var countDownDate = new Date("Mar 16, 2022 18:00:00").getTime();
+    // Set the date we're counting down to
+    var countDownDate = new Date("Mar 16, 2022 18:00:00").getTime();
 
-      // Update the count down every 1 second
-      var x = setInterval(function () {
-        // Get today's date and time
-        var now = new Date().getTime();
+    // Update the count down every 1 second
+    var x = setInterval(function () {
+      // Get today's date and time
+      var now = new Date().getTime();
 
-        // Find the distance between now and the count down date
-        var distanceCDT = countDownDate - now;
+      // Find the distance between now and the count down date
+      var distanceCDT = countDownDate - now;
 
-        // Time calculations for days, hours, minutes and seconds
-        var days = Math.floor(distanceCDT / (1000 * 60 * 60 * 24));
-        var hours = Math.floor(
-          (distanceCDT % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-        );
-        var minutes = Math.floor((distanceCDT % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distanceCDT % (1000 * 60)) / 1000);
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distanceCDT / (1000 * 60 * 60 * 24));
+      var hours = Math.floor(
+        (distanceCDT % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      var minutes = Math.floor((distanceCDT % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distanceCDT % (1000 * 60)) / 1000);
 
-        // Output the result in an element with id="demo"
-        document.getElementById("counterDown").innerHTML =
-          'Only<br/><b>' + days + 'd ' + hours + "h " + minutes + "m " + seconds + "s " + '<b/><br/> left to the opening of the exhibition ';
-
-        // If the count down is over, write some text
-        if (distanceCDT < 0) {
-          clearInterval(x);
-          document.getElementById("counterDown").innerHTML = "EXPIRED";
-        }
-      }, 1000);
-    }
+      // Output the result in an element with id="demo"
+  
+      //document.getElementById("nowyCounterDown").innerHTML = '<p><br>Przygotowujemy wystawę pt.: <b><i>Dialogi Vincenza — spojrzenia</i></b> <br>jest onaczęścią projektu:<i>Twórczość Stanisława Vincenza u progu XXI wieku— w ujęciu interdyscyplinarnym</i><br>Zapraszamy na wernisaż wystawy za:</p>' ""
+      document.getElementById("nowyCounterDown").innerHTML = '<p><b>Wernisaż wystawy odbędzie się już za:  ' + days + ' dni ' + hours + " godzin " + minutes + " minut i " + seconds + " sekund.";
+      // If the count down is over, write some text
+      if (distanceCDT < 0) {
+        clearInterval(x);
+        document.getElementById("nowyCounterDown").innerHTML = "EXPIRED";
+      }
+    }, 1000);
+  }
 
   main();
 
@@ -156,17 +202,41 @@ coming next:
     renderer.shadowMap.enabled = true;
     renderer.outputEncoding = THREE.sRGBEncoding;
 
-  const openGestures = () => {
-      counterDownTimer();
-      document.getElementById("infoDOM").style.display = "none";
-          document.getElementById("infoGesty").style.display = "block";
-          document.getElementById("nameOnBarGesty").innerHTML = `
-          <div class="counter" id="counterDown"></div>
-      `;
+    ////////////////////////////////////////dodaneXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+    /////////////////
+    const openGestures = () => {
+      if (document.getElementsByTagName("iframe")[0].contentWindow !== undefined) {
+        document.getElementById("widget").style.display = "flex";
+
+        //console.log(document.getElementById('iframe'))
+       // console.log(document.getElementsByTagName("iframe")[0].history)
+/*
+        var bu = document.getElementsByTagName("iframe")[0].contentWindow;
+        //x = window.frames[0];
+
+        //bu.document.getElementsByTagName("body")[0].style.backgroundColor = "white";
+        bu.document.getElementsByTagName("p")[0].innerHTML = `<p>Wystawa <b><i>Stanisław Vincenz Dialogi Vincenza — spojrzenia</i></b>
+       jest częścią projektu <i>Twórczość Stanisława Vincenza u progu XXI wieku— w ujęciu interdyscyplinarnym</i>><br>
+        więcej o projekcie mozesz dowiedzieć się pod tym linkiem:<br> 
+        <a href="https://stanislaw-vincenz.puno.ac.uk/o-projekcie-2/?lang=pl"> stanislaw-vincenz.puno.ac.uk</a>
+        </p>`;
+     */
+     
+      }
+   
+
+   
+      
+    counterDownTimer();
+  
+
       switch (deviceType) {
         case "desktop":
-         
+
           /*
+
+ 
           document.getElementById("infoDOM").style.display = "none";
           document.getElementById("infoGesty").style.display = "block";
           document.getElementById("nameOnBarGesty").innerHTML = `
@@ -239,16 +309,26 @@ coming next:
         });
       });
     }
- 
+    //if (deviceType === 'desktop'){
+    //
+    // }
+    ////////////////////////////////////////
     // CONTROLS
 
     const controls = new OrbitControls(camera, renderer.domElement);
 
-  
+    /*
+      controls.mouseButtons = {
+        RIGHT: THREE.MOUSE.ROTATE,
+        MIDDLE: THREE.MOUSE.DOLLY,
+        LEFT: THREE.MOUSE.PAN
+      };
+  */
+    //console.log(deviceType)
 
     switch (deviceType) {
       case "desktop":
-        openGestures();
+        //openGestures();
         controls.mouseButtons = {
           RIGHT: THREE.MOUSE.PAN,
           MIDDLE: THREE.MOUSE.DOLLY,
@@ -292,11 +372,11 @@ coming next:
         };
         controls.screenSpacePanning = false;
         controls.minDistance = 0;
-        controls.maxDistance = 2;
-        controls.panSpeed = 5;
-        controls.rotateSpeed = 0.05;
+        controls.maxDistance = 2.5;
+        controls.panSpeed = 2;
+        controls.rotateSpeed = 1;
         controls.enableZoom = true;
-        controls.zoomSpeed = 1;
+        controls.zoomSpeed = 1.5;
     }
 
     controls.maxPolarAngle = Math.PI / 2; // Limit angle of visibility
@@ -310,7 +390,6 @@ coming next:
     //controls.update();
 
     ////////////////////  Camera Bouncing Sphere
-    
     const geometry = new THREE.SphereBufferGeometry(0.5, 8, 8); //0.5
     const material = new THREE.MeshBasicMaterial({
       color: 0x010101,
@@ -341,13 +420,22 @@ coming next:
     Tplane.name = "TargetBouncingSphere";
     Tplane.geometry.computeBoundingSphere();
     scene.add(Tplane);
-  
+    /////////////////////////////////////
+    /*
+      camera.matrix.extractBasis(ignore1, ignore2, front_vector);
+      //put the camera at a negative distance from the object.
+      camera.position.copy(controls.target);
+      camera.position.addScaledVector(front_vector, distance);
+  */
     const setPickPosition = (event) => {
       let pos = getCanvasRelativePosition(event);
       pickPosition.x = (pos.x / renderer.domElement.clientWidth) * 2 - 1;
       pickPosition.y = (pos.y / renderer.domElement.clientHeight) * -2 + 1; // note we flip Y
-  
-        touchStart();
+
+
+      touchStart();
+
+
     };
 
     const clearPickPosition = () => {
@@ -356,12 +444,35 @@ coming next:
     };
 
     // event listeners
+    window.addEventListener("message", (event) => {
+      if (event.origin !== "https://e6pnh.csb.app")
+        return;
+     // console.log("originevent.", event.data)
+
+      if (event.data == "closeInfo") {
+       // console.log("trzeba zamknąć to okno")
+
+        document.getElementById("widget").style.display = "none";
+
+        //const frame = document.getElementById("widget");
+        //frame.parentNode.removeChild(frame);
+      }
+      // ...
+    }, false);
     document
       .getElementById("infoButton")
       .addEventListener("click", openGestures);
     document
       .getElementById("infoButton")
       .addEventListener("touchstart", openGestures);
+    /*
+          const openGesturesX = () => {
+            //console.log('nowe współrzędne')
+            //controls.target.copy(new THREE.Vector3(0,1.4,0));
+            // controls.object.position.copy(new THREE.Vector3(1,1.4,1.5));
+          };
+          */
+    //window.addEventListener("load", openGestures);
     window.addEventListener("click", setPickPosition);
     window.addEventListener("mouseout", clearPickPosition);
     window.addEventListener("mouseleave", clearPickPosition);
@@ -380,28 +491,31 @@ coming next:
 
     window.addEventListener("touchend", clearPickPosition);
     controls.addEventListener("end", function () {
-      let bezruch = true
+      //let bezruch = true
       if (
-        document.getElementById("infoGesty").style.display === "block" &&
+        document.getElementById("widget").style.display !== "none" &&
         isTweenCompleted === true
       ) {
         window.TimeoutID = setTimeout(() => {
-          document.getElementById("infoGesty").style.display = "none";
+          document.getElementById("widget").style.display = "none";
         }, 1000);
       }
     });
 
-   
+
 
     ///////
-    openGestures();
+    //openGestures();
 
     // cheking double tap
     const touchStart = () => {
       if (deviceType === "mobile" || deviceType === "tablet") {
-          return null;
+        return null;
       }
-      
+
+
+
+      //console.log('jsgbukjxs ',deviceType)
       if (clickTimer == null) {
         ///////////////////////////// now it is cheking for double click:
         clickTimer = setTimeout(function () {
@@ -413,6 +527,9 @@ coming next:
         clickTimer = null;
         whatTouch = 2;
       }
+
+
+
     };
 
     const makeInfoDOM = (artObject) => {
@@ -420,7 +537,7 @@ coming next:
         return false;
       }
 
-      document.getElementById("infoDOM").style.display = `none`;
+      //document.getElementById("informacja").style.display = `none`;
 
       const artObjectWorldDirection = new THREE.Vector3();
       artObject.getWorldDirection(artObjectWorldDirection);
@@ -541,7 +658,10 @@ coming next:
         camera.aspect = canvas.clientWidth / canvas.clientHeight;
         camera.updateProjectionMatrix();
       }
-      
+      ///////////////////////////////////////
+
+      //controls.addEventListener("change", function () {
+
       if (clickTimer == null) {
         //
       }
@@ -586,7 +706,7 @@ coming next:
               }
             }
           }
-        }); 
+        });
       }
       controls.saveState();
       //});
@@ -630,19 +750,19 @@ coming next:
 
             clickFeedback(INTERSECTED);
 
-            
+
             switch (whatTouch) {
               case 1:
                 //
                 break;
               case 2:
-                
+
                 //console.log(bezruch)
                 makeInfoDOM(INTERSECTED);
 
                 break;
               default:
-     INTERSECTED = null;
+                INTERSECTED = null;
               //INTERSECTED0 = INTERSECTED
             }
           }
@@ -716,72 +836,5 @@ coming next:
     }
   };
 </script>
-
-<body>
-  <section id="loading-screen">
-    <img src="/textures/BluePointGallery.gif" alt="LogoBluePointArtGallery" width="10%" />
-    Stanisław Vincenz<br /><i><b>...Dialogues - Views</b></i></section>
-
-  <div id="container"></div>
-
-  <canvas id="c"></canvas>
-
-  <div class="exhibition-name">
-    <section>
-      
-      <b>Stanisław Vincenz<i> Dialogues - Views</i><b /><br />
-        BLUE POINT ART GALLERY<br />Londyn 2021<br />
-
-        <input type="button" value="refresh app" onClick="window.location.reload(false)"
-          ontouchstart="window.location.reload(false)" /><br />
-
-    </section>
-  </div>
-  <div id="prix" display="none"></div>
-  <div id="name-title" display="none"></div>
-  <div id="infoButton" class="open-info-button" display="block">
-    <a href="#"><img id="info-icon" src="/textures/icons/info.png" /></a>
-  </div>
-
-  <div id="infoDOM" class="infoDOM" onload='counterDownTimer()'>
-    <a href="#" class="close-button" ontouchstart="closeButton()" onclick="closeButton()"></a>
-
-    <script>
-      const closeButton = () => {
-        document.getElementById("infoDOM").style.display = "none";
-      };
-
-    </script>
-
-    <audio id="myAudio">
-      <source src="sounds/click.ogg" type="audio/ogg" />
-      <source src="sounds/click.mp3" type="audio/mpeg" />
-      Your browser does not support the audio element.
-    </audio>
-
-    <p id="nameOnBar"></p>
-    <section id="infoFRAME" class="infoFRAME"></section>
-  </div>
-
-  <div id="infoGesty" class="infoDOM">
-    <a href="#" class="close-button" ontouchstart="closeButtonG()" onclick="closeButtonG()"></a>
-    <script>
-      const closeButtonG = () => {
-        document.getElementById("infoGesty").style.display = "none";
-      };
-    </script>
-    <div id="nameOnBarGesty" class="nameOnBarGesty"></div>
-  </div>
-
-  <script>
-    var div = document.getElementById("infoFRAME");
-    div.ontouchstart = function (event) {
-      event.stopImmediatePropagation();
-    };
-    div.ontouchmove = function (event) {
-      event.stopImmediatePropagation();
-    };
-  </script>
 </body>
-
 </html>
