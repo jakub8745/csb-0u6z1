@@ -115,25 +115,33 @@ section {
 }
 
 .open-info-button {
-  font-family: "Courier Prime", monospace;
   background: none;
   padding: 0em;
   position: relative;
-  margin-left: 38px;
-  bottom: 2em;
+  bottom: 4.9em;
+  margin-left: 0px;
+  left: 5em;
+  top: -4.8em;
+}
+
+.icons {
+  position: absolute;
 }
 #info-icon {
   height: 2em;
 }
+#reload-icon {
+  height: 2em;
+}
 
 .reload-button {
-  margin-bottom: -2px;
+  top: -7em;
+  width: 2em;
+  margin-left: 1.8em;
+
   position: relative;
-  font-size: 1.5em;
-  border: solid 2px rgb(0, 0, 0);
-  border-radius: 2em;
-  background-color: rgb(255, 255, 255);
 }
+
 .exhibition-name {
   position: absolute;
   bottom: 8em;
